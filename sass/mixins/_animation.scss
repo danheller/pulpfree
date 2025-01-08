@@ -1,0 +1,31 @@
+/* Animation mixin
+ * 
+ * Use this mixin to create multiple animations.
+ * 
+ * Usage: 
+ 
+	.class { @include animation('animation-1 .5s 1', 'animation-2 .5s 1 .5s') }
+	
+ * For a list of available animation types, please see MDN
+ * [https://developer.mozilla.org/en-US/docs/Web/CSS/animation]
+ *
+ * Credit: [http://joshbroton.com/quick-fix-sass-mixins-for-css-keyframe-animations/]
+ */
+
+
+@mixin animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    -moz-animation:    $animations;
+    -o-animation:      $animations;
+    animation:         $animations;
+}

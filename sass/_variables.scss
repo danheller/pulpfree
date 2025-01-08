@@ -1,0 +1,21 @@
+$primary: #900;
+$secondary: #fc0;
+$tertiary: rgb(0, 124, 186);
+$lightgray: #f4f3f0;
+$cta-color: #68a400;
+$sans: "Source Sans 3", sans-serif;
+$serif: "Adobe Caslon Pro", serif;
+$image-path: '../images';
+
+// Theme specific variables in pixels - default is [16]
+$base-font: 16;
+$screen-small: 46em;
+$screen-medium: 52em;
+$screen-large: 75em;
+
+// navigation
+$navbgimg: radial-gradient(rgba(120, 0, 0, 0.1), rgba(120, 0, 0, 0));
+$navbgcolor: $primary;
+$navfgcolor: #fff;
+$navhover: $secondary;
+$menufgcolor: #fff;

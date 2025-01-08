@@ -1,0 +1,33 @@
+/* Keyframes mixin
+ * 
+ * Use this mixin to create your own [name] mixin for referencing in your styles.
+ * 
+ * Usage: 
+ 
+	@include keyframes(fadeIn) {
+		from	{ opacity: 0; }
+		to		{ opacity: 1; }
+	}
+	
+ * For a list of available animation types, please see MDN
+ * [https://developer.mozilla.org/en-US/docs/Web/CSS/animation]
+ */
+
+
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+	@-o-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	}
+}

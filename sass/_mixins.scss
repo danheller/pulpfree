@@ -1,0 +1,264 @@
+/* Use this file in conjunction with Compass:
+ * http://compass-style.org
+ * You should check if a function exists in Compass first.
+ */
+
+/*
+	TOC
+	0. Includes
+	1. Variable Settings
+	2. Typography
+	3. Layout
+	4. CSS Visuals
+	5. Images
+	6. Retina
+	
+*/
+
+
+//-------------------------------------
+// 0. Inlcudes
+//-------------------------------------
+
+@import 'mixins/alpha-me';
+@import 'mixins/animation';
+@import 'mixins/breakpoints';
+@import 'mixins/keyframes';
+@import 'mixins/outlines';
+
+
+//-------------------------------------
+// 1. Variable Settings
+//-------------------------------------
+
+$baseFont: 16 !default;
+
+// support for ie8 - set this to 'false' after 7/1/2014
+$ie8: false !default;
+
+
+//-------------------------------------
+// 2. Typography
+//-------------------------------------
+
+@mixin font-size($sizeValue: $baseFont) {
+	font-size: $sizeValue + px;
+	font-size: ($sizeValue / $baseFont) + rem;
+}
+
+$font-sample-variable: arial, helvetica, sans-serif !default;
+@mixin font-style( $font-family: $font-sample-variable, $font-style: normal, $font-weight: 400 ) {
+	font-family: $font-family;
+	font-style: $font-style;
+	font-weight: $font-weight;
+}
+// usage: .class { @include styled-font($font-sample-variable, italic, 700); }
+
+@mixin line-height($heightValue: $baseFont ){
+	line-height: $heightValue + px;
+	line-height: ($heightValue / $baseFont) + rem;
+}
+
+@mixin declare-font-face($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+	@font-face {
+		font-family: '#{$font-family}';
+		src: url('#{$font-filename}.eot');
+		src: url('#{$font-filename}.eot?#iefix') format('embedded-opentype'),
+//		url('#{$font-filename}.woff') format('woff'),
+		url('#{$font-filename}.ttf') format('truetype'),
+		url('#{$font-filename}.svg##{$font-family}') format('svg');
+		font-weight: $font-weight;
+		font-style: $font-style;
+		font-stretch: $font-stretch;
+		font-display: swap;
+	}
+}
+// usage: @include declare-font-face('Gill Sans', 'Gill-Sans-MT-Pro-Italic', 400, italic);
+// usage: @include declare-font-face('National', '/wp-content/themes/usc_gateway/fonts/NationalWeb-Regular', 500, normal);
+
+
+//-------------------------------------
+// 3. Layout
+//-------------------------------------
+
+@mixin clearfix {
+  display: inline-block;
+	&:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	* html & { height: 1px }
+}
+
+@mixin box-sizing($box-model: border-box) {
+	-webkit-box-sizing: $box-model; // Safari <= 5
+	   -moz-box-sizing: $box-model; // Firefox <= 19
+			box-sizing: $box-model;
+}
+
+
+//-------------------------------------
+// 4. CSS Visuals
+//-------------------------------------
+
+@mixin alpha-attribute($attribute, $color, $background) {
+	$percent: alpha($color) * 100%;
+	$opaque: opacify($color, 1);
+	$solid-color: mix($opaque, $background, $percent);
+	#{$attribute}: $solid-color;
+	#{$attribute}: $color;
+}
+// usage: @include alpha-attribute('background-color', rgba(black, 0.5), white);
+
+
+// compas: http://compass-style.org/reference/compass/css3/box_shadow/
+@mixin shadow($x, $y, $blur, $color) {
+	-webkit-box-shadow: $x $y $blur $color;
+	   -moz-box-shadow: $x $y $blur $color;
+	   		box-shadow: $x $y $blur $color;
+}
+// usage: @include shadow(2px, 2px, 5px, rgba(0,0,0,.5));
+
+// compass: http://compass-style.org/reference/compass/css3/box_shadow/
+@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
+	-webkit-box-shadow: $top $left $blur $color #{$inset};
+	   -moz-box-shadow: $top $left $blur $color #{$inset};
+	   		box-shadow: $top $left $blur $color #{$inset};
+}
+
+// compass: http://compass-style.org/reference/compass/css3/border_radius/
+@mixin rounded($radiusSize) {
+	$radiusPx: $radiusSize + px;
+	$radius: ($radiusSize / $baseFont) + rem;
+	-webkit-border-radius: $radiusPx;
+	   -moz-border-radius: $radiusPx;
+			border-radius: $radiusPx;
+	-webkit-border-radius: $radius;
+	   -moz-border-radius: $radius;
+			border-radius: $radius;
+}
+// usage: @include rounded(10);
+
+@mixin border-top-radius($radius) {
+	-webkit-border-top-right-radius: $radius;
+			border-top-right-radius: $radius;
+	 -webkit-border-top-left-radius: $radius;
+			 border-top-left-radius: $radius;
+					background-clip: padding-box;
+}
+// usage: @include border-top-radius(10px);
+
+@mixin border-right-radius($radius) {
+	-webkit-border-bottom-right-radius: $radius;
+			border-bottom-right-radius: $radius;
+	   -webkit-border-top-right-radius: $radius;
+			   border-top-right-radius: $radius;
+					   background-clip: padding-box;
+}
+// usage: @include border-right-radius(10px);
+
+@mixin border-bottom-radius($radius) {
+	-webkit-border-bottom-right-radius: $radius;
+			border-bottom-right-radius: $radius;
+	 -webkit-border-bottom-left-radius: $radius;
+			 border-bottom-left-radius: $radius;
+					   background-clip: padding-box;
+}
+// usage: @include border-top-radius(10px);
+
+@mixin border-left-radius($radius) {
+	-webkit-border-bottom-left-radius: $radius;
+			border-bottom-left-radius: $radius;
+	   -webkit-border-top-left-radius: $radius;
+			   border-top-left-radius: $radius;
+					  background-clip: padding-box;
+}
+// usage: @include border-top-radius(10px);
+
+// compass: http://compass-style.org/examples/compass/css3/gradient/
+@mixin linear-gradient($from, $to) {
+	/* Fallback for sad browsers */
+	background-color: $to;
+	/* Mozilla Firefox */
+	background-image: -moz-linear-gradient($from, $to);
+	/* Opera */
+	background-image: -o-linear-gradient($from, $to);
+	/* WebKit (Safari 4+, Chrome 1+) */
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, $from), color-stop(1, $to));
+	/* WebKit (Chrome 11+) */
+	background-image: -webkit-linear-gradient($from, $to);
+	/* IE10 */
+	background-image: -ms-linear-gradient($from, $to);
+	/* W3C */
+	background-image: linear-gradient($from, $to);
+}
+
+
+//-------------------------------------
+// 5. Images
+//-------------------------------------
+// svg with png fallback
+$image-path: 'images' !default;
+$fallback-extension: 'png' !default;
+$retina-suffix: '@2x';
+// NOTE: 'background-image' conflicts with compass: http://compass-style.org/reference/compass/css3/images/#mixin-background-image
+@mixin background-image($name, $size:false){
+	background-image: url(#{$image-path}/#{$name}.svg);
+	@if($size){
+		background-size: $size;
+	}
+	.ie8 &, .ie7 &, .no-svg & {
+		background-image: url(#{$image-path}/#{$name}.#{$fallback-extension});
+	}	
+	@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+		background-image: url(#{$image-path}/#{$name}#{$retina-suffix}.#{$fallback-extension});
+	}
+}
+// usage: .class { @include background-image('pattern'); }
+
+
+// Alternate svg with png fallback
+$ie8: false !default;
+$image-path: 'images' !default;
+$fallback-extension: 'png' !default;
+$retina-suffix: '@2x';
+@mixin svg-background-image($name, $size:false, $position:false, $retina:false){
+	background-image: url(#{$image-path}/#{$name}.svg);
+	background-repeat: no-repeat;
+	@if($size){
+		background-size: $size;
+	}
+	@if($position){
+		background-position: $position;
+	}
+	.ie8 &, .ie7 &, .no-svg & {
+		background-image: url(#{$image-path}/#{$name}.#{$fallback-extension});
+	}	
+	@if $retina == true {
+		@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+			background-image: url(#{$image-path}/#{$name}#{$retina-suffix}.#{$fallback-extension});
+		}
+	}
+}
+// usage: .class { @include svg-background-image(usc-logo,100%,100%,true); }
+
+
+//-------------------------------------
+// 6. Retina
+//-------------------------------------
+
+@mixin retinize($file, $type, $width, $height) {
+	background-image: url('../img/' + $file + '.' + $type);
+	
+	@media #{$is-hidpi} {
+		& {
+			background-image: url('../img/' + $file + '-2x.' + $type);
+			-webkit-background-size: $width $height;
+			   -moz-background-size: $width $height;
+					background-size: $width $height;
+		}
+	}
+}
