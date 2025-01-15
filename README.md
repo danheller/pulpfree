@@ -44,5 +44,5 @@ A set of links to social media pages
 [Example](https://giving.usc.edu/usc-associates/usc-associates-scholarships/#block-block_8995a63a5d30e1b12a3586eff6d912cc)
 
 ## Statistics
-A grid of oversize numbers with descriptions underneath
+A grid of oversize numbers with descriptions underneath  
 [Example](https://giving.usc.edu#block-block_29f7677bfe00cd8645de6d344f957761)
